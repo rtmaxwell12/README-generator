@@ -15,7 +15,11 @@ const questions = [
 
 // Create a function to write README file
 function writeToFile(fileName, data) {
-    fs.writeFile(fileName, data, err);
+    fs.writeFile(fileName, data, (err) => {
+        if(err) {
+            console.log(err); 
+        }
+    });
 }
 
 // Create a function to initialize app
@@ -39,12 +43,12 @@ function init() {
         {
             type: 'input',
             message: questions[3],
-            name: 'instructions for usage'
+            name: 'usage'
         },
         {
             type: 'input',
             message: questions[4],
-            name: 'future contributions'
+            name: 'contributions'
         },
         {
             type: 'input',
@@ -57,7 +61,8 @@ function init() {
             choices: ['Apache', 'MIT', 'Mozilla-Public', 'GNU-General-Public', 'Common-Development-and Distribution', 'None'],
             name: 'license'
         }
-    ]).then((response) => {
+    ]
+    ).then((response) => {
         let markdown = generateMarkdown(response);
         writeToFile("newREADME.md", markdown, (err) => err? console.log("Error!") : console.log("success!"));
     })
@@ -65,3 +70,4 @@ function init() {
 
 // Function call to initialize app
 init();
+
